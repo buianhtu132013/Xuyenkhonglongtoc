@@ -1,151 +1,115 @@
-/* ===== RESET ===== */
-* {
+body {
   margin: 0;
-  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: white;
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: #1c1c1c;
+  padding: 20px;
+  height: 100vh;
   box-sizing: border-box;
 }
 
-/* ===== BODY ===== */
-body {
-  font-family: "Segoe UI", sans-serif;
-  background: #121212;
-  color: #eee;
-  display: flex;
-  height: 100vh;
+.sidebar h1 {
+  font-size: 22px;
+  margin-bottom: 20px;
 }
 
-/* ===== SIDEBAR ===== */
-.sidebar {
-  width: 270px;
-  background: #1c1c1c;
-  border-right: 1px solid #333;
-  padding: 20px;
-  overflow-y: auto;
-}
-
-.sidebar h2 {
-  font-size: 20px;
-  margin-bottom: 15px;
-  color: #ffcc00;
-}
-
-/* Chapter item */
-.chapter-item {
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  background: #2a2a2a;
+.menuBtn {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  background: #333;
+  color: white;
   cursor: pointer;
-  transition: 0.2s;
+  border-radius: 8px;
 }
 
-.chapter-item:hover {
+.controls button {
+  width: 100%;
+  margin: 6px 0;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
   background: #444;
+  color: white;
 }
 
-/* Active chapter */
-.chapter-item.active {
-  background: #ffcc00;
-  color: black;
-  font-weight: bold;
-}
-
-/* ===== MAIN ===== */
+/* Main */
 .main {
   flex: 1;
-  padding: 25px;
-  overflow-y: auto;
-}
-
-.main h1 {
-  font-size: 26px;
-  margin-bottom: 10px;
+  padding: 30px;
 }
 
 #chapterTitle {
-  font-size: 20px;
-  color: #ffcc00;
-  margin-bottom: 15px;
+  font-size: 26px;
+  margin-bottom: 20px;
 }
 
-/* ===== CONTENT ===== */
-#content {
+#story {
   white-space: pre-line;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.8;
+  background: #181818;
   padding: 20px;
-  background: #1e1e1e;
-  border-radius: 15px;
-  border: 1px solid #333;
-  min-height: 400px;
+  border-radius: 12px;
 }
 
-/* ===== BUTTONS ===== */
-.controls {
-  margin-bottom: 15px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+/* Popup Menu */
+.chapterMenu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
 }
 
-button {
-  padding: 10px 14px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
+.menuBox {
+  width: 320px;
+  background: #222;
+  margin: 80px auto;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.chapterBtn {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
   background: #333;
+  border: none;
   color: white;
-  font-size: 15px;
-  transition: 0.2s;
+  cursor: pointer;
+  border-radius: 8px;
 }
 
-button:hover {
-  background: #555;
+.closeBtn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 10px;
+  border: none;
+  background: crimson;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
 }
 
-/* ===== LIGHT MODE ===== */
-body.light {
-  background: #f5f5f5;
-  color: #111;
-}
-
-body.light .sidebar {
+/* Light Mode */
+.lightMode {
   background: white;
-  border-right: 1px solid #ccc;
+  color: black;
 }
 
-body.light .chapter-item {
+.lightMode .sidebar {
   background: #eee;
-  color: #111;
 }
 
-body.light .chapter-item:hover {
-  background: #ddd;
-}
-
-body.light #content {
-  background: white;
-  color: black;
-  border: 1px solid #ccc;
-}
-
-body.light button {
-  background: #ddd;
-  color: black;
-}
-
-body.light button:hover {
-  background: #bbb;
-}
-
-/* ===== MOBILE ===== */
-@media (max-width: 768px) {
-  body {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    height: auto;
-  }
+.lightMode #story {
+  background: #f5f5f5;
 }
