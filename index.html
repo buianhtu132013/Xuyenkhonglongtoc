@@ -1,44 +1,51 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Long Tộc Story</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- SIDEBAR MENU CHƯƠNG -->
-  <div id="sidebar">
-    <h2>📖 Danh sách chương</h2>
-    <div id="chapterList"></div>
-  </div>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h1>📖 Long Tộc</h1>
 
-  <!-- MAIN -->
-  <div class="container">
+    <button class="menuBtn" onclick="openChapterMenu()">
+      📚 Danh sách chương
+    </button>
 
-    <!-- HEADER -->
-    <header>
-      <h1>🐉 Long Tộc Cuối Cùng</h1>
-      <p>Xuyên Không – Huyền Huyễn – Fantasy Epic</p>
-    </header>
-
-    <!-- BUTTON CONTROL -->
     <div class="controls">
-      <button onclick="toggleChapterMenu()">📚 Chương</button>
-      <button onclick="prevChapter()">⬅ Trước</button>
-      <button onclick="nextChapter()">Sau ➡</button>
+      <button id="prevBtn" onclick="prevChapter()">⬅ Trước</button>
+      <button id="nextBtn" onclick="nextChapter()">Sau ➡</button>
+
       <button onclick="increaseFont()">A+</button>
       <button onclick="decreaseFont()">A-</button>
+
       <button onclick="toggleTheme()">🌙/☀</button>
     </div>
+  </div>
 
-    <!-- CHAPTER CONTENT -->
-    <main class="main">
-      <h2 id="chapterTitle"></h2>
-      <pre id="content"></pre>
-    </main>
+  <!-- Main Content -->
+  <div class="main">
+    <h2 id="chapterTitle">Đang tải...</h2>
 
+    <div id="story">
+      Nội dung truyện sẽ hiện ở đây...
+    </div>
+  </div>
+
+  <!-- Popup Chapter Menu -->
+  <div id="chapterMenu" class="chapterMenu">
+    <div class="menuBox">
+      <h3>Danh sách chương</h3>
+
+      <div id="chapterList"></div>
+
+      <button class="closeBtn" onclick="closeChapterMenu()">Đóng</button>
+    </div>
   </div>
 
   <script src="script.js"></script>
