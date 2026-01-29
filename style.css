@@ -1,0 +1,151 @@
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== BODY ===== */
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #121212;
+  color: #eee;
+  display: flex;
+  height: 100vh;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 270px;
+  background: #1c1c1c;
+  border-right: 1px solid #333;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #ffcc00;
+}
+
+/* Chapter item */
+.chapter-item {
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background: #2a2a2a;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.chapter-item:hover {
+  background: #444;
+}
+
+/* Active chapter */
+.chapter-item.active {
+  background: #ffcc00;
+  color: black;
+  font-weight: bold;
+}
+
+/* ===== MAIN ===== */
+.main {
+  flex: 1;
+  padding: 25px;
+  overflow-y: auto;
+}
+
+.main h1 {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+#chapterTitle {
+  font-size: 20px;
+  color: #ffcc00;
+  margin-bottom: 15px;
+}
+
+/* ===== CONTENT ===== */
+#content {
+  white-space: pre-line;
+  font-size: 18px;
+  line-height: 1.8;
+  padding: 20px;
+  background: #1e1e1e;
+  border-radius: 15px;
+  border: 1px solid #333;
+  min-height: 400px;
+}
+
+/* ===== BUTTONS ===== */
+.controls {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #333;
+  color: white;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #555;
+}
+
+/* ===== LIGHT MODE ===== */
+body.light {
+  background: #f5f5f5;
+  color: #111;
+}
+
+body.light .sidebar {
+  background: white;
+  border-right: 1px solid #ccc;
+}
+
+body.light .chapter-item {
+  background: #eee;
+  color: #111;
+}
+
+body.light .chapter-item:hover {
+  background: #ddd;
+}
+
+body.light #content {
+  background: white;
+  color: black;
+  border: 1px solid #ccc;
+}
+
+body.light button {
+  background: #ddd;
+  color: black;
+}
+
+body.light button:hover {
+  background: #bbb;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+}
