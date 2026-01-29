@@ -1,53 +1,62 @@
 // ===============================
-// LONG TỘC STORY - SCRIPT FULL
+// WEBSITE ĐỌC TRUYỆN LONG TỘC
+// FULL SCRIPT - AUTO TITLE
 // ===============================
 
-// Danh sách chương
-const chapterList = [
-  { id: 1, title: "Chương 1: Huyết Long Thức Tỉnh" },
-  { id: 2, title: "Chương 2: Long Hồn Tổ Tiên" },
-  { id: 3, title: "Chương 3: Long Thần Quyền" },
-  { id: 4, title: "Chương 4: Cổ Tộc Xuất Hiện" },
-  { id: 5, title: "Chương 5: Bí Mật Long Tộc" }
-];
-
 let currentChapter = 1;
+let totalChapters = 5;
 let fontSize = 20;
 
 // ===============================
-// Load chương từ file txt
+// LOAD CHƯƠNG
 // ===============================
 function loadChapter(id) {
   currentChapter = id;
 
-  const chapterTitle = document.getElementById("chapterTitle");
-  const storyBox = document.getElementById("story");
+  const titleEl = document.getElementById("chapterTitle");
+  const storyEl = document.getElementById("story");
 
-  chapterTitle.innerText = chapterList[id - 1].title;
+  storyEl.innerHTML = "⏳ Đang tải chương...";
 
-  // ✅ Load file đúng: chuong1.txt, chuong2.txt...
   fetch(`chuong${id}.txt`)
     .then((res) => {
       if (!res.ok) throw new Error("Không tìm thấy file");
       return res.text();
     })
     .then((data) => {
-      storyBox.innerText = data;
+      // Tách dòng
+      const lines = data.split("\n");
+
+      // Dòng đầu là tên chương
+      const chapterName = lines[0].trim();
+
+      // Nội dung còn lại
+      const content = lines.slice(1).join("\n");
+
+      // Hiển thị title
+      titleEl.innerText = chapterName;
+
+      // Hiển thị nội dung giữ xuống dòng
+      storyEl.innerText = content;
+
+      // Set font size
+      storyEl.style.fontSize = fontSize + "px";
     })
     .catch(() => {
-      storyBox.innerHTML = `
-        <div class="errorBox">
-          ❌ Lỗi load chương! <br><br>
-          Không tìm thấy file: <b>chuong${id}.txt</b>
+      titleEl.innerText = "❌ Lỗi";
+      storyEl.innerHTML = `
+        <div style="padding:20px;color:red;">
+          Không tìm thấy file: <b>chuong${id}.txt</b><br>
+          Hãy chắc chắn file tồn tại trong repo.
         </div>
       `;
     });
 
-  closeChapterMenu();
+  renderChapterMenu();
 }
 
 // ===============================
-// Chương trước / sau
+// CHƯƠNG TRƯỚC / SAU
 // ===============================
 function prevChapter() {
   if (currentChapter > 1) {
@@ -56,13 +65,13 @@ function prevChapter() {
 }
 
 function nextChapter() {
-  if (currentChapter < chapterList.length) {
+  if (currentChapter < totalChapters) {
     loadChapter(currentChapter + 1);
   }
 }
 
 // ===============================
-// Font chữ A+ / A-
+// FONT SIZE
 // ===============================
 function increaseFont() {
   fontSize += 2;
@@ -71,53 +80,50 @@ function increaseFont() {
 
 function decreaseFont() {
   fontSize -= 2;
-  if (fontSize < 12) fontSize = 12;
+  if (fontSize < 14) fontSize = 14;
   document.getElementById("story").style.fontSize = fontSize + "px";
 }
 
 // ===============================
-// Dark / Light Mode
+// DARK/LIGHT MODE
 // ===============================
 function toggleTheme() {
   document.body.classList.toggle("lightMode");
 }
 
 // ===============================
-// MENU CHƯƠNG (Popup gọn)
+// DANH SÁCH CHƯƠNG
+// ===============================
+function renderChapterMenu() {
+  const listEl = document.getElementById("chapterList");
+  listEl.innerHTML = "";
+
+  for (let i = 1; i <= totalChapters; i++) {
+    const btn = document.createElement("button");
+    btn.className = "chapterBtn";
+    btn.innerText =
+      i === currentChapter ? `▶ Chương ${i}` : `Chương ${i}`;
+
+    btn.onclick = () => loadChapter(i);
+
+    listEl.appendChild(btn);
+  }
+}
+
+// ===============================
+// MENU HIỆN / ẨN
 // ===============================
 function openChapterMenu() {
-  const menu = document.getElementById("chapterMenu");
-  menu.style.display = "block";
+  document.getElementById("chapterMenu").style.display = "block";
 }
 
 function closeChapterMenu() {
-  const menu = document.getElementById("chapterMenu");
-  menu.style.display = "none";
+  document.getElementById("chapterMenu").style.display = "none";
 }
 
 // ===============================
-// Render danh sách chương
-// ===============================
-function renderChapterMenu() {
-  const menuList = document.getElementById("chapterList");
-
-  menuList.innerHTML = "";
-
-  chapterList.forEach((chap) => {
-    const btn = document.createElement("button");
-    btn.className = "chapterBtn";
-    btn.innerText = chap.title;
-
-    btn.onclick = () => loadChapter(chap.id);
-
-    menuList.appendChild(btn);
-  });
-}
-
-// ===============================
-// Khi mở web
+// KHỞI ĐỘNG WEB
 // ===============================
 window.onload = function () {
-  renderChapterMenu();
   loadChapter(1);
 };
