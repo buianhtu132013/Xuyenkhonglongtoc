@@ -3,113 +3,114 @@ body {
   font-family: Arial, sans-serif;
   background: #111;
   color: white;
-  display: flex;
+  transition: 0.3s;
 }
 
-/* Sidebar */
-.sidebar {
-  width: 260px;
-  background: #1c1c1c;
+header {
+  text-align: center;
   padding: 20px;
-  height: 100vh;
-  box-sizing: border-box;
 }
 
-.sidebar h1 {
-  font-size: 22px;
-  margin-bottom: 20px;
+.sub {
+  opacity: 0.7;
 }
 
-.menuBtn {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: none;
-  background: #333;
-  color: white;
-  cursor: pointer;
-  border-radius: 8px;
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+#storyBox {
+  background: rgba(255,255,255,0.08);
+  padding: 25px;
+  border-radius: 15px;
+  margin-top: 15px;
+}
+
+pre {
+  white-space: pre-wrap;
+  line-height: 1.8;
+  font-size: 20px;
+}
+
+/* CONTROL BAR */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
 }
 
 .controls button {
-  width: 100%;
-  margin: 6px 0;
-  padding: 10px;
+  background: rgba(255,255,255,0.15);
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  background: #444;
   color: white;
-}
-
-/* Main */
-.main {
-  flex: 1;
-  padding: 30px;
-}
-
-#chapterTitle {
-  font-size: 26px;
-  margin-bottom: 20px;
-}
-
-#story {
-  white-space: pre-line;
-  font-size: 20px;
-  line-height: 1.8;
-  background: #181818;
-  padding: 20px;
+  font-size: 18px;
+  padding: 12px 18px;
   border-radius: 12px;
+  cursor: pointer;
 }
 
-/* Popup Menu */
-.chapterMenu {
-  display: none;
+.controls button:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* TOP BAR FIXED */
+.top-bar {
   position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.8);
+  top: 0;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  transition: 0.3s;
 }
 
-.menuBox {
-  width: 320px;
+/* SPACE FOR FIXED BAR */
+main {
+  padding-top: 80px;
+}
+
+/* MENU */
+.menu {
+  position: fixed;
+  left: -100%;
+  top: 0;
+  width: 260px;
+  height: 100%;
   background: #222;
-  margin: 80px auto;
   padding: 20px;
-  border-radius: 12px;
+  overflow-y: auto;
+  transition: 0.3s;
+  z-index: 2000;
 }
 
-.chapterBtn {
+.menu.active {
+  left: 0;
+}
+
+.menu button {
   width: 100%;
+  margin: 8px 0;
   padding: 10px;
-  margin: 5px 0;
-  background: #333;
-  border: none;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.12);
   color: white;
+  border: none;
   cursor: pointer;
-  border-radius: 8px;
 }
 
-.closeBtn {
-  width: 100%;
-  margin-top: 15px;
-  padding: 10px;
-  border: none;
-  background: crimson;
-  color: white;
-  cursor: pointer;
-  border-radius: 8px;
-}
-
-/* Light Mode */
-.lightMode {
+/* LIGHT MODE */
+body.light {
   background: white;
   color: black;
 }
 
-.lightMode .sidebar {
-  background: #eee;
+body.light #storyBox {
+  background: rgba(0,0,0,0.08);
 }
 
-.lightMode #story {
-  background: #f5f5f5;
+body.light .controls button {
+  background: rgba(0,0,0,0.15);
+  color: black;
 }

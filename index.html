@@ -3,49 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Long Tộc Story</title>
+  <title>Xuyên Không Long Tộc</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h1>📖 Long Tộc</h1>
+  <!-- HEADER -->
+  <header>
+    <h1>📖 Long Tộc Cuối Cùng</h1>
+    <p class="sub">Xuyên Không – Huyền Huyễn – Fantasy Epic</p>
+  </header>
 
-    <button class="menuBtn" onclick="openChapterMenu()">
-      📚 Danh sách chương
-    </button>
-
-    <div class="controls">
-      <button id="prevBtn" onclick="prevChapter()">⬅ Trước</button>
-      <button id="nextBtn" onclick="nextChapter()">Sau ➡</button>
-
-      <button onclick="increaseFont()">A+</button>
-      <button onclick="decreaseFont()">A-</button>
-
-      <button onclick="toggleTheme()">🌙/☀</button>
-    </div>
+  <!-- TOP CONTROL BAR -->
+  <div class="controls top-bar" id="topBar">
+    <button onclick="prevChapter()">⬅</button>
+    <button onclick="nextChapter()">➡</button>
+    <button onclick="fontPlus()">A+</button>
+    <button onclick="fontMinus()">A-</button>
+    <button onclick="toggleTheme()">🌙/☀</button>
+    <button onclick="toggleMenu()">📚</button>
   </div>
 
-  <!-- Main Content -->
-  <div class="main">
+  <!-- MENU CHƯƠNG -->
+  <div class="menu" id="menu">
+    <h2>📚 Danh sách chương</h2>
+    <div id="chapterList"></div>
+  </div>
+
+  <!-- MAIN STORY -->
+  <main>
     <h2 id="chapterTitle">Đang tải...</h2>
-
-    <div id="story">
-      Nội dung truyện sẽ hiện ở đây...
+    <div id="storyBox">
+      <pre id="storyText"></pre>
     </div>
-  </div>
+  </main>
 
-  <!-- Popup Chapter Menu -->
-  <div id="chapterMenu" class="chapterMenu">
-    <div class="menuBox">
-      <h3>Danh sách chương</h3>
-
-      <div id="chapterList"></div>
-
-      <button class="closeBtn" onclick="closeChapterMenu()">Đóng</button>
-    </div>
+  <!-- BOTTOM CONTROL BAR -->
+  <div class="controls bottom-bar">
+    <button onclick="prevChapter()">⬅</button>
+    <button onclick="nextChapter()">➡</button>
+    <button onclick="fontPlus()">A+</button>
+    <button onclick="fontMinus()">A-</button>
+    <button onclick="toggleTheme()">🌙/☀</button>
+    <button onclick="toggleMenu()">📚</button>
   </div>
 
   <script src="script.js"></script>
