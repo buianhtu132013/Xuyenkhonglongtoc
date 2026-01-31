@@ -1,20 +1,26 @@
-/* ===== Reset ===== */
-body {
+/* Reset */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
   font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  color: #222;
-  overflow-x: hidden;
+  background: #f2f2f2;
+  color: #111;
+  text-align: center;
+  transition: 0.3s;
 }
 
-/* ===== Dark Mode ===== */
-body.dark {
-  background: #121212;
-  color: #eee;
+/* Dark Mode */
+body.dark-mode {
+  background: #111;
+  color: white;
 }
 
-/* ===== Thanh chúc chạy ===== */
+/* Thanh chúc bám theo */
 #marquee-bar {
   position: fixed;
   top: 0;
@@ -22,65 +28,62 @@ body.dark {
   width: 100%;
   background: black;
   color: cyan;
-  font-weight: bold;
   padding: 8px 0;
   z-index: 9999;
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Text chạy */
 #marquee-text {
-  display: inline-block;
+  font-size: 14px;
   white-space: nowrap;
-  animation: marquee 12s linear infinite;
-  padding-left: 100%;
+  overflow: hidden;
+  animation: marquee 10s linear infinite;
 }
 
+/* Animation chạy ngang */
 @keyframes marquee {
-  from {
-    transform: translateX(0%);
-  }
-  to {
-    transform: translateX(-100%);
-  }
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
 
 /* Nút X */
 #close-marquee {
   position: absolute;
   right: 15px;
-  top: 6px;
+  top: 5px;
+  border: none;
   background: red;
   color: white;
-  border: none;
-  font-size: 18px;
-  padding: 2px 10px;
-  border-radius: 8px;
+  font-size: 16px;
+  padding: 3px 8px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-/* ===== Header ===== */
+/* Header */
 h1 {
-  margin-top: 70px; /* chừa chỗ marquee */
-  text-align: center;
-  font-size: 26px;
+  margin-top: 60px;
+  font-size: 32px;
 }
 
-/* ===== Controls ===== */
+/* Control buttons */
 .controls {
+  margin: 15px auto;
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin: 15px 0;
   flex-wrap: wrap;
 }
 
 button {
   padding: 10px 15px;
   border: none;
-  border-radius: 12px;
-  cursor: pointer;
+  border-radius: 10px;
   background: #ddd;
+  cursor: pointer;
   font-size: 16px;
 }
 
@@ -88,74 +91,37 @@ button:hover {
   background: #bbb;
 }
 
-/* Dark mode button */
-body.dark button {
-  background: #333;
-  color: white;
-}
-
-body.dark button:hover {
-  background: #555;
-}
-
-/* ===== Chapter Menu ===== */
-#chapter-menu {
-  display: none;
-  max-width: 600px;
-  margin: auto;
-  padding: 10px;
-  border-radius: 15px;
-  background: white;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-}
-
-body.dark #chapter-menu {
-  background: #222;
-}
-
-/* ===== Chapter Title ===== */
-#chapter-title {
-  text-align: center;
-  font-size: 22px;
-  margin: 15px 0;
-  font-weight: bold;
-}
-
-/* ===== Nội dung truyện VIP ===== */
-#story-content {
-  text-align: left;          /* Fix lệch */
-  max-width: 700px;
-  margin: auto;
-  padding: 20px;
-  font-size: 18px;
-  line-height: 1.9;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  background: white;
-  border-radius: 18px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.15);
-}
-
-/* Dark mode truyện */
-body.dark #story-content {
-  background: #1e1e1e;
-  color: #eee;
-}
-
-/* ===== Scroll To Top ===== */
-#scrollTopBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+/* Dark button */
+#dark-btn {
   background: black;
   color: white;
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  font-size: 22px;
-  display: none;
 }
 
-#scrollTopBtn:hover {
-  background: gray;
+body.dark-mode #dark-btn {
+  background: white;
+  color: black;
+}
+
+/* Nội dung truyện */
+#story-box {
+  width: 95%;
+  max-width: 700px;
+  margin: 20px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  line-height: 1.7;
+  font-size: 18px;
+}
+
+/* Dark mode story box */
+body.dark-mode #story-box {
+  background: #222;
+  color: white;
+}
+
+/* Chapter title */
+#chapter-title {
+  font-size: 26px;
+  margin: 20px 0;
 }
