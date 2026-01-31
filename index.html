@@ -2,42 +2,48 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Web Đọc Truyện</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<!-- Marquee -->
-<div class="marquee">
-  ✨ Tác Giả Tú chúc bạn đọc truyện vui vẻ. Thanks ✨
-</div>
+  <!-- Thanh neon chạy -->
+  <div id="marquee-bar">
+    <div id="marquee-text">
+      ✨ Tác Giả Tú chúc bạn đọc truyện vui vẻ. Thanks ✨
+    </div>
+    <button id="close-marquee">❌</button>
+  </div>
 
-<h1>📖 Web Đọc Truyện</h1>
+  <h1>📖 Web Đọc Truyện</h1>
 
-<!-- Thanh nút trên -->
-<div class="controls top">
-  <button onclick="prevChapter()">⬅ Trước</button>
+  <!-- Nút chức năng trên -->
+  <div class="controls">
+    <button id="prev-btn">← Trước</button>
+    <button id="chapter-btn">📚 Danh sách chương</button>
+    <button id="next-btn">Sau →</button>
+  </div>
 
-  <button onclick="toggleMenu()">📚 Danh sách chương</button>
+  <!-- Menu chương (ẩn mặc định) -->
+  <div id="chapter-menu"></div>
 
-  <button onclick="nextChapter()">Sau ➡</button>
-</div>
+  <!-- Nút Dark Mode -->
+  <button id="theme-btn">🌙</button>
 
-<!-- Menu chương -->
-<div id="menu" class="menu hidden"></div>
+  <!-- Tiêu đề chương -->
+  <h2 id="chapter-title">Chương 1</h2>
 
-<!-- Nội dung -->
-<h2 id="chapterTitle">Chương 1</h2>
-<div id="content">Đang tải...</div>
+  <!-- Nội dung truyện -->
+  <div id="story-content">Đang tải...</div>
 
-<!-- Thanh nút dưới -->
-<div class="controls bottom">
-  <button onclick="prevChapter()">⬅ Trước</button>
-  <button onclick="nextChapter()">Sau ➡</button>
-</div>
+  <!-- Nút chức năng dưới -->
+  <div class="controls bottom">
+    <button id="prev-btn2">← Trước</button>
+    <button id="next-btn2">Sau →</button>
+  </div>
 
-<!-- JS luôn đặt cuối -->
-<script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>

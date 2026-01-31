@@ -1,26 +1,25 @@
-/* Reset */
+/* RESET */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Body */
 body {
   font-family: Arial, sans-serif;
   background: #f2f2f2;
-  color: #111;
+  color: black;
   text-align: center;
   transition: 0.3s;
 }
 
-/* Dark Mode */
+/* DARK MODE */
 body.dark-mode {
   background: #111;
   color: white;
 }
 
-/* Thanh chúc bám theo */
+/* ===== Thanh chúc neon ===== */
 #marquee-bar {
   position: fixed;
   top: 0;
@@ -30,26 +29,22 @@ body.dark-mode {
   color: cyan;
   padding: 8px 0;
   z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Text chạy */
-#marquee-text {
-  font-size: 14px;
-  white-space: nowrap;
   overflow: hidden;
-  animation: marquee 10s linear infinite;
 }
 
-/* Animation chạy ngang */
+#marquee-text {
+  white-space: nowrap;
+  display: inline-block;
+  animation: marquee 8s linear infinite;
+  font-size: 14px;
+}
+
 @keyframes marquee {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+  from { transform: translateX(100%); }
+  to   { transform: translateX(-100%); }
 }
 
-/* Nút X */
+/* Nút ❌ */
 #close-marquee {
   position: absolute;
   right: 15px;
@@ -65,11 +60,11 @@ body.dark-mode {
 
 /* Header */
 h1 {
-  margin-top: 60px;
-  font-size: 32px;
+  margin-top: 70px;
+  font-size: 28px;
 }
 
-/* Control buttons */
+/* Controls */
 .controls {
   margin: 15px auto;
   display: flex;
@@ -91,37 +86,65 @@ button:hover {
   background: #bbb;
 }
 
-/* Dark button */
-#dark-btn {
-  background: black;
-  color: white;
+/* Menu chương ẨN mặc định */
+#chapter-menu {
+  display: none;
+  width: 90%;
+  max-width: 400px;
+  margin: 15px auto;
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
 }
 
-body.dark-mode #dark-btn {
+#chapter-menu button {
+  width: 100%;
+  margin: 5px 0;
+}
+
+/* Dark menu */
+body.dark-mode #chapter-menu {
+  background: #222;
+}
+
+/* Nút Dark Mode */
+#theme-btn {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  background: black;
+  color: white;
+  border: none;
+  font-size: 20px;
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+body.dark-mode #theme-btn {
   background: white;
   color: black;
 }
 
-/* Nội dung truyện */
-#story-box {
-  width: 95%;
-  max-width: 700px;
-  margin: 20px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  line-height: 1.7;
-  font-size: 18px;
-}
-
-/* Dark mode story box */
-body.dark-mode #story-box {
-  background: #222;
-  color: white;
-}
-
 /* Chapter title */
 #chapter-title {
-  font-size: 26px;
-  margin: 20px 0;
+  font-size: 24px;
+  margin: 15px 0;
+}
+
+/* Nội dung truyện FULL */
+#story-content {
+  width: 100%;
+  padding: 25px;
+  background: white;
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: left;
+}
+
+/* Dark story */
+body.dark-mode #story-content {
+  background: #1e1e1e;
+  color: white;
 }
