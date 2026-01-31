@@ -1,67 +1,140 @@
+// ===============================
+// FIX LOAD + FONT ZOOM LIMIT
+// ===============================
+
+const chapterList = [
+  { title: "Chương 1", file: "chapters/chuong1.txt" },
+  { title: "Chương 2", file: "chapters/chuong2.txt" },
+  { title: "Chương 3", file: "chapters/chuong3.txt" }
+];
+
+let currentChapter = 0;
+
+// ===== FONT SIZE CONTROL =====
+let fontSize = 18;          // mặc định
+const minFont = 14;         // nhỏ nhất
+const maxFont = 28;         // to nhất
+
+// ===== HTML ELEMENTS =====
 const chapterSelect = document.getElementById("chapterSelect");
-const chapterTitle = document.getElementById("chapterTitle");
 const chapterContent = document.getElementById("chapterContent");
 
-let currentChapter = 1;
-let fontSize = 18;
-const totalChapters = 5;
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
 
-/* Load danh sách chương */
-for (let i = 1; i <= totalChapters; i++) {
-  const option = document.createElement("option");
-  option.value = i;
-  option.textContent = "Chương " + i;
-  chapterSelect.appendChild(option);
+const fontMinus = document.getElementById("fontMinus");
+const fontPlus = document.getElementById("fontPlus");
+
+const toggleModeBtn = document.getElementById("toggleMode");
+
+// ===============================
+// MENU CHAPTER
+// ===============================
+function loadChapterMenu() {
+  chapterSelect.innerHTML = "";
+
+  chapterList.forEach((chap, index) => {
+    const option = document.createElement("option");
+    option.value = index;
+    option.textContent = chap.title;
+    chapterSelect.appendChild(option);
+  });
 }
 
-/* Load chương */
-function loadChapter(num) {
-  currentChapter = num;
-  chapterTitle.innerText = "Chương " + num;
-  chapterSelect.value = num;
+// ===============================
+// LOAD CHAPTER FILE
+// ===============================
+async function loadChapter(index) {
+  currentChapter = index;
+  chapterSelect.value = index;
 
-  fetch(`chapters/chuong${num}.txt`)
-    .then(res => {
-      if (!res.ok) throw new Error("Không tìm thấy file chương!");
-      return res.text();
-    })
-    .then(text => {
-      chapterContent.innerText = text;
-    })
-    .catch(err => {
-      chapterContent.innerText = "❌ " + err.message;
-    });
+  const filePath = chapterList[index].file;
+
+  chapterContent.innerHTML = "⏳ Đang tải...";
+
+  try {
+    const res = await fetch(filePath);
+
+    if (!res.ok) throw new Error("Không tìm thấy: " + filePath);
+
+    const text = await res.text();
+
+    // ✅ Hiển thị đúng kiểu truyện (auto xuống dòng)
+    chapterContent.innerHTML = `
+      <div class="storyText">${text}</div>
+    `;
+
+    applyFontSize();
+  } catch (err) {
+    chapterContent.innerHTML = `
+      <div class="errorBox">
+        ❌ Lỗi load chương!<br><br>
+        ${err.message}
+      </div>
+    `;
+  }
+
+  updateButtons();
 }
 
-/* Nút chương */
-document.getElementById("prevBtn").onclick = () => {
-  if (currentChapter > 1) loadChapter(currentChapter - 1);
-};
+// ===============================
+// FONT SIZE APPLY
+// ===============================
+function applyFontSize() {
+  const story = document.querySelector(".storyText");
+  if (story) story.style.fontSize = fontSize + "px";
+}
 
-document.getElementById("nextBtn").onclick = () => {
-  if (currentChapter < totalChapters) loadChapter(currentChapter + 1);
-};
+// ===============================
+// UPDATE BUTTONS
+// ===============================
+function updateButtons() {
+  prevBtn.disabled = currentChapter === 0;
+  nextBtn.disabled = currentChapter === chapterList.length - 1;
+}
 
-/* Dropdown */
-chapterSelect.onchange = () => {
-  loadChapter(Number(chapterSelect.value));
-};
+// ===============================
+// EVENT LISTENERS
+// ===============================
 
-/* Dark mode */
-document.getElementById("toggleMode").onclick = () => {
+// Chapter change
+chapterSelect.addEventListener("change", (e) => {
+  loadChapter(Number(e.target.value));
+});
+
+// Prev / Next
+prevBtn.addEventListener("click", () => {
+  if (currentChapter > 0) loadChapter(currentChapter - 1);
+});
+
+nextBtn.addEventListener("click", () => {
+  if (currentChapter < chapterList.length - 1)
+    loadChapter(currentChapter + 1);
+});
+
+// Font zoom -
+fontMinus.addEventListener("click", () => {
+  if (fontSize > minFont) {
+    fontSize -= 2;
+    applyFontSize();
+  }
+});
+
+// Font zoom +
+fontPlus.addEventListener("click", () => {
+  if (fontSize < maxFont) {
+    fontSize += 2;
+    applyFontSize();
+  }
+});
+
+// Dark mode
+toggleModeBtn.addEventListener("click", () => {
   document.body.classList.toggle("dark");
-};
+});
 
-/* Font */
-document.getElementById("fontPlus").onclick = () => {
-  fontSize += 2;
-  chapterContent.style.fontSize = fontSize + "px";
-};
-
-document.getElementById("fontMinus").onclick = () => {
-  fontSize -= 2;
-  chapterContent.style.fontSize = fontSize + "px";
-};
-
-/* Start */
-loadChapter(1);
+// ===============================
+// INIT
+// ===============================
+loadChapterMenu();
+loadChapter(0);
