@@ -1,103 +1,113 @@
-// ===============================
-// LONG TỘC CUỐI CÙNG - SCRIPT FULL
-// Load file: chuong1.txt, chuong2.txt...
-// ===============================
+// =============================
+// DANH SÁCH CHƯƠNG
+// =============================
+const chapters = [
+  "chuong1.txt",
+  "chuong2.txt",
+  "chuong3.txt"
+];
 
-let currentChapter = 1;
-let fontSize = 20;
-let darkMode = true;
+let currentIndex = 0;
 
-// Danh sách tên chương
-const chapterTitles = {
-  1: "Huyết Long Thức Tỉnh",
-  2: "Cổ Ấn Trong Huyết",
-  3: "Long Thần Quyền",
-  4: "Cổ Tộc Xuất Hiện",
-  5: "Bí Mật Long Tộc"
-};
+const selectBox = document.getElementById("chapterSelect");
 
-// ===============================
-// LOAD CHƯƠNG TXT (ROOT)
-// ===============================
-function loadChapter(num) {
-  currentChapter = num;
+// =============================
+// TẠO DROPDOWN
+// =============================
+chapters.forEach((file, i) => {
+  let option = document.createElement("option");
+  option.value = i;
+  option.textContent = "Chương " + (i + 1);
+  selectBox.appendChild(option);
+});
 
-  const title = chapterTitles[num] || `Chương ${num}`;
-  document.getElementById("chapterTitle").innerText =
-    `Chương ${num}: ${title}`;
+// =============================
+// LOAD CHƯƠNG
+// =============================
+async function loadChapter(index) {
+  const box = document.getElementById("chapterContent");
 
-  const contentBox = document.getElementById("chapterContent");
+  if (index < 0 || index >= chapters.length) return;
 
-  contentBox.innerHTML = "⏳ Đang tải...";
+  currentIndex = index;
+  selectBox.value = index;
 
-  // ✅ ĐÚNG: file nằm root
-  fetch(`chuong${num}.txt`)
-    .then((res) => {
-      if (!res.ok) throw new Error("Không tìm thấy file");
-      return res.text();
-    })
-    .then((text) => {
-      contentBox.innerHTML = "";
+  const fileName = chapters[index];
+  const url = "./chapter/" + fileName;
 
-      // Hiển thị từng dòng
-      const lines = text.split("\n");
-      lines.forEach((line) => {
-        const p = document.createElement("p");
-        p.textContent = line;
-        contentBox.appendChild(p);
-      });
-    })
-    .catch(() => {
-      contentBox.innerHTML = `
-        ❌ Lỗi load chương!<br>
-        Kiểm tra file: <b>chuong${num}.txt</b>
-      `;
-    });
-}
+  box.innerHTML = "⏳ Đang tải chương...";
 
-// ===============================
-// NÚT TRƯỚC / SAU
-// ===============================
-function prevChapter() {
-  if (currentChapter > 1) loadChapter(currentChapter - 1);
-}
+  try {
+    const res = await fetch(url);
 
-function nextChapter() {
-  loadChapter(currentChapter + 1);
-}
+    if (!res.ok) {
+      throw new Error("Không tìm thấy file: " + url);
+    }
 
-// ===============================
-// FONT SIZE
-// ===============================
-function increaseFont() {
-  fontSize += 2;
-  document.getElementById("chapterContent").style.fontSize = fontSize + "px";
-}
+    const text = await res.text();
+    box.innerHTML = text;
 
-function decreaseFont() {
-  fontSize -= 2;
-  if (fontSize < 14) fontSize = 14;
-  document.getElementById("chapterContent").style.fontSize = fontSize + "px";
-}
+    localStorage.setItem("lastChapter", index);
 
-// ===============================
-// DARK MODE
-// ===============================
-function toggleTheme() {
-  darkMode = !darkMode;
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
-  if (darkMode) {
-    document.body.style.background = "#111";
-    document.body.style.color = "white";
-  } else {
-    document.body.style.background = "white";
-    document.body.style.color = "black";
+  } catch (err) {
+    box.innerHTML = "❌ Lỗi load chương!<br><br>" + err.message;
   }
 }
 
-// ===============================
-// LOAD CHƯƠNG 1 KHI MỞ WEB
-// ===============================
-window.onload = () => {
-  loadChapter(1);
+// =============================
+// NEXT / PREV
+// =============================
+function nextChapter() {
+  if (currentIndex < chapters.length - 1) {
+    loadChapter(currentIndex + 1);
+  }
+}
+
+function prevChapter() {
+  if (currentIndex > 0) {
+    loadChapter(currentIndex - 1);
+  }
+}
+
+function selectChapter() {
+  loadChapter(parseInt(selectBox.value));
+}
+
+// =============================
+// DARK MODE
+// =============================
+function toggleDark() {
+  document.body.classList.toggle("dark");
+}
+
+// =============================
+// AUTO LOAD
+// =============================
+window.onload = function () {
+  let saved = localStorage.getItem("lastChapter");
+  if (saved !== null) {
+    loadChapter(parseInt(saved));
+  } else {
+    loadChapter(0);
+  }
 };
+
+// =============================
+// ẨN THANH TRÊN KHI SCROLL
+// =============================
+let lastScroll = 0;
+const topBar = document.getElementById("topBar");
+
+window.addEventListener("scroll", () => {
+  let currentScroll = window.scrollY;
+
+  if (currentScroll > lastScroll && currentScroll > 100) {
+    topBar.classList.add("hideBar");
+  } else {
+    topBar.classList.remove("hideBar");
+  }
+
+  lastScroll = currentScroll;
+});

@@ -1,55 +1,74 @@
 body {
   margin: 0;
-  font-family: Arial;
-  transition: 0.3s;
-}
-
-.dark {
-  background: #111;
-  color: white;
-}
-
-.light {
-  background: white;
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
   color: black;
-}
-
-.topBar, .bottomBar {
-  position: sticky;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  padding: 10px;
-  background: rgba(0,0,0,0.8);
-  z-index: 999;
-}
-
-.bottomBar {
-  position: relative;
-  margin-top: 30px;
-}
-
-button {
-  padding: 10px 14px;
-  border: none;
-  border-radius: 10px;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.readerBox {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
+  transition: 0.3s;
 }
 
 h1 {
   text-align: center;
+  margin: 20px 0;
 }
 
-pre {
-  white-space: pre-wrap;
+.topBar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: white;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 999;
+  transition: 0.3s;
+}
+
+.hideBar {
+  transform: translateY(-120%);
+}
+
+button, select {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+#chapterContent {
+  max-width: 900px;
+  margin: 100px auto 50px;
+  padding: 25px;
+  background: white;
+  border-radius: 18px;
+  font-size: 18px;
   line-height: 1.8;
-  font-size: 20px;
+  white-space: pre-wrap;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+.bottomBar {
+  max-width: 900px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding-bottom: 30px;
+}
+
+/* DARK MODE */
+.dark {
+  background: #121212;
+  color: white;
+}
+
+.dark #chapterContent {
+  background: #1f1f1f;
+  color: white;
+}
+
+.dark .topBar {
+  background: #1f1f1f;
 }

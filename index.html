@@ -3,51 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Xuyên Không Long Tộc</title>
+  <title>Web Đọc Truyện</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <h1>📖 Long Tộc Cuối Cùng</h1>
-    <p class="sub">Xuyên Không – Huyền Huyễn – Fantasy Epic</p>
-  </header>
+  <h1>📖 Web Đọc Truyện</h1>
 
-  <!-- TOP CONTROL BAR -->
-  <div class="controls top-bar" id="topBar">
+  <!-- Thanh nút trên -->
+  <div class="topBar" id="topBar">
     <button onclick="prevChapter()">⬅</button>
+
+    <select id="chapterSelect" onchange="selectChapter()"></select>
+
     <button onclick="nextChapter()">➡</button>
-    <button onclick="fontPlus()">A+</button>
-    <button onclick="fontMinus()">A-</button>
-    <button onclick="toggleTheme()">🌙/☀</button>
-    <button onclick="toggleMenu()">📚</button>
+
+    <button onclick="toggleDark()">🌙</button>
   </div>
 
-  <!-- MENU CHƯƠNG -->
-  <div class="menu" id="menu">
-    <h2>📚 Danh sách chương</h2>
-    <div id="chapterList"></div>
+  <!-- Nội dung truyện -->
+  <div id="chapterContent">
+    ⏳ Đang tải truyện...
   </div>
 
-  <!-- MAIN STORY -->
-  <main>
-    <h2 id="chapterTitle">Đang tải...</h2>
-    <div id="storyBox">
-      <pre id="storyText"></pre>
-    </div>
-  </main>
-
-  <!-- BOTTOM CONTROL BAR -->
-  <div class="controls bottom-bar">
-    <button onclick="prevChapter()">⬅</button>
-    <button onclick="nextChapter()">➡</button>
-    <button onclick="fontPlus()">A+</button>
-    <button onclick="fontMinus()">A-</button>
-    <button onclick="toggleTheme()">🌙/☀</button>
-    <button onclick="toggleMenu()">📚</button>
+  <!-- Thanh nút dưới -->
+  <div class="bottomBar">
+    <button onclick="prevChapter()">⬅ Chương trước</button>
+    <button onclick="nextChapter()">Chương sau ➡</button>
   </div>
 
+  <!-- GỌI FILE JS -->
   <script src="script.js"></script>
+
 </body>
 </html>
