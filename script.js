@@ -1,75 +1,103 @@
+// ===============================
+// LONG TỘC CUỐI CÙNG - SCRIPT FULL
+// Load file: chuong1.txt, chuong2.txt...
+// ===============================
+
 let currentChapter = 1;
 let fontSize = 20;
 let darkMode = true;
 
-const totalChapters = 5;
+// Danh sách tên chương
+const chapterTitles = {
+  1: "Huyết Long Thức Tỉnh",
+  2: "Cổ Ấn Trong Huyết",
+  3: "Long Thần Quyền",
+  4: "Cổ Tộc Xuất Hiện",
+  5: "Bí Mật Long Tộc"
+};
 
+// ===============================
+// LOAD CHƯƠNG TXT (ROOT)
+// ===============================
 function loadChapter(num) {
-  if (num < 1 || num > totalChapters) return;
-
   currentChapter = num;
 
-  document.getElementById("storyText").innerText = "Đang tải...";
+  const title = chapterTitles[num] || `Chương ${num}`;
+  document.getElementById("chapterTitle").innerText =
+    `Chương ${num}: ${title}`;
 
+  const contentBox = document.getElementById("chapterContent");
+
+  contentBox.innerHTML = "⏳ Đang tải...";
+
+  // ✅ ĐÚNG: file nằm root
   fetch(`chuong${num}.txt`)
-    .then(res => {
+    .then((res) => {
       if (!res.ok) throw new Error("Không tìm thấy file");
       return res.text();
     })
-    .then(text => {
-      let lines = text.split("\n");
+    .then((text) => {
+      contentBox.innerHTML = "";
 
-      let title = lines[0].trim();
-      let content = lines.slice(1).join("\n");
-
-      document.getElementById("chapterTitle").innerText = title;
-      document.getElementById("storyText").innerText = content;
-
-      updateButtons();
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      // Hiển thị từng dòng
+      const lines = text.split("\n");
+      lines.forEach((line) => {
+        const p = document.createElement("p");
+        p.textContent = line;
+        contentBox.appendChild(p);
+      });
     })
     .catch(() => {
-      document.getElementById("storyText").innerText =
-        "❌ Lỗi load chương! Kiểm tra file chuong" + num + ".txt";
+      contentBox.innerHTML = `
+        ❌ Lỗi load chương!<br>
+        Kiểm tra file: <b>chuong${num}.txt</b>
+      `;
     });
 }
 
-function updateButtons() {
-  document.getElementById("prevBtn").disabled = currentChapter === 1;
-  document.getElementById("nextBtn").disabled =
-    currentChapter === totalChapters;
-
-  document.getElementById("prevBtn2").disabled = currentChapter === 1;
-  document.getElementById("nextBtn2").disabled =
-    currentChapter === totalChapters;
+// ===============================
+// NÚT TRƯỚC / SAU
+// ===============================
+function prevChapter() {
+  if (currentChapter > 1) loadChapter(currentChapter - 1);
 }
 
 function nextChapter() {
   loadChapter(currentChapter + 1);
 }
 
-function prevChapter() {
-  loadChapter(currentChapter - 1);
-}
-
-function fontPlus() {
+// ===============================
+// FONT SIZE
+// ===============================
+function increaseFont() {
   fontSize += 2;
-  document.getElementById("storyText").style.fontSize = fontSize + "px";
+  document.getElementById("chapterContent").style.fontSize = fontSize + "px";
 }
 
-function fontMinus() {
+function decreaseFont() {
   fontSize -= 2;
   if (fontSize < 14) fontSize = 14;
-  document.getElementById("storyText").style.fontSize = fontSize + "px";
+  document.getElementById("chapterContent").style.fontSize = fontSize + "px";
 }
 
-function toggleMode() {
+// ===============================
+// DARK MODE
+// ===============================
+function toggleTheme() {
   darkMode = !darkMode;
 
-  document.body.className = darkMode ? "dark" : "light";
+  if (darkMode) {
+    document.body.style.background = "#111";
+    document.body.style.color = "white";
+  } else {
+    document.body.style.background = "white";
+    document.body.style.color = "black";
+  }
 }
 
+// ===============================
+// LOAD CHƯƠNG 1 KHI MỞ WEB
+// ===============================
 window.onload = () => {
   loadChapter(1);
 };
