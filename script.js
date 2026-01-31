@@ -1,99 +1,61 @@
-const content = document.getElementById("content");
-
-const prevBtnTop = document.getElementById("prevBtnTop");
-const nextBtnTop = document.getElementById("nextBtnTop");
-const prevBtnBottom = document.getElementById("prevBtnBottom");
-const nextBtnBottom = document.getElementById("nextBtnBottom");
-
-const topControls = document.getElementById("topControls");
-const bottomControls = document.getElementById("bottomControls");
-
-const menuBtn = document.getElementById("menuBtn");
-const chapterMenu = document.getElementById("chapterMenu");
-
-const marqueeText = document.getElementById("marqueeText");
-
 let currentChapter = 1;
+const totalChapters = 5;
 
-/* Neon chạy lại mỗi lần load chương */
-function restartMarquee() {
-  marqueeText.parentElement.innerHTML =
-    `<marquee id="marqueeText" scrollamount="3">
-      ✨ Tác Giả Tú chúc bạn đọc truyện vui vẻ. Thanks ✨
-    </marquee>`;
+const contentDiv = document.getElementById("content");
+const titleDiv = document.getElementById("chapterTitle");
+const menuDiv = document.getElementById("menu");
+
+function loadMenu() {
+  menuDiv.innerHTML = "";
+  for (let i = 1; i <= totalChapters; i++) {
+    let btn = document.createElement("button");
+    btn.innerText = "Chương " + i;
+    btn.onclick = () => loadChapter(i);
+    menuDiv.appendChild(btn);
+  }
 }
 
-/* Load chương */
+function toggleMenu() {
+  menuDiv.classList.toggle("hidden");
+}
+
 async function loadChapter(chap) {
-  const file = `chapters/chuong${chap}.txt`;
+  currentChapter = chap;
+  titleDiv.innerText = "Chương " + chap;
+  contentDiv.innerText = "Đang tải...";
+
+  let file = `chapters/chuong${chap}.txt`;
 
   try {
-    const res = await fetch(file);
-    if (!res.ok) throw "no";
+    let res = await fetch(file);
 
-    const text = await res.text();
-    content.innerText = text;
+    if (!res.ok) {
+      contentDiv.innerHTML =
+        "❌ Không tìm thấy chương<br><b>" + file + "</b>";
+      return;
+    }
 
-    currentChapter = chap;
-    restartMarquee();
-  } catch {
-    content.innerText = "❌ Chương chưa tồn tại!";
+    let text = await res.text();
+    contentDiv.innerText = text;
+
+  } catch (err) {
+    contentDiv.innerHTML =
+      "❌ Lỗi load chương!<br>" + err;
   }
 }
 
-/* Tạo menu chương tự động */
-async function generateChapters() {
-  chapterMenu.innerHTML = "";
-
-  for (let i = 1; i <= 200; i++) {
-    const res = await fetch(`chapters/chuong${i}.txt`);
-    if (!res.ok) break;
-
-    const btn = document.createElement("button");
-    btn.innerText = `Chương ${i}`;
-    btn.onclick = () => {
-      loadChapter(i);
-      chapterMenu.classList.add("hidden");
-    };
-
-    chapterMenu.appendChild(btn);
+function nextChapter() {
+  if (currentChapter < totalChapters) {
+    loadChapter(currentChapter + 1);
   }
 }
 
-/* Menu bật tắt */
-menuBtn.onclick = () => {
-  chapterMenu.classList.toggle("hidden");
-};
-
-/* Điều hướng */
-prevBtnTop.onclick = () => loadChapter(currentChapter - 1);
-prevBtnBottom.onclick = () => loadChapter(currentChapter - 1);
-
-nextBtnTop.onclick = () => loadChapter(currentChapter + 1);
-nextBtnBottom.onclick = () => loadChapter(currentChapter + 1);
-
-/* Scroll hiện nút */
-window.addEventListener("scroll", () => {
-  let scrollTop = window.scrollY;
-  let scrollBottom =
-    window.innerHeight + scrollTop >= document.body.offsetHeight - 50;
-
-  // Nút trên: chỉ hiện ở đầu
-  if (scrollTop < 100) {
-    topControls.style.display = "flex";
-  } else {
-    topControls.style.display = "none";
+function prevChapter() {
+  if (currentChapter > 1) {
+    loadChapter(currentChapter - 1);
   }
-
-  // Nút dưới: chỉ hiện ở cuối
-  if (scrollBottom) {
-    bottomControls.style.display = "flex";
-  } else {
-    bottomControls.style.display = "none";
-  }
-});
+}
 
 /* Khởi động */
-generateChapters();
+loadMenu();
 loadChapter(1);
-restartMarquee();

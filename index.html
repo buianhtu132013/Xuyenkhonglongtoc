@@ -2,44 +2,42 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>📖 Web Đọc Truyện</title>
-
+  <title>Web Đọc Truyện</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <!-- Neon chạy -->
-  <div id="marqueeBox">
-    <marquee id="marqueeText" scrollamount="3">
-      ✨ Tác Giả Tú chúc bạn đọc truyện vui vẻ. Thanks ✨
-    </marquee>
-  </div>
+<!-- Marquee -->
+<div class="marquee">
+  ✨ Tác Giả Tú chúc bạn đọc truyện vui vẻ. Thanks ✨
+</div>
 
-  <header>📖 Web Đọc Truyện</header>
+<h1>📖 Web Đọc Truyện</h1>
 
-  <!-- Nút chức năng trên -->
-  <div class="top-controls" id="topControls">
-    <button id="prevBtnTop">⬅ Trước</button>
+<!-- Thanh nút trên -->
+<div class="controls top">
+  <button onclick="prevChapter()">⬅ Trước</button>
 
-    <button id="menuBtn">📚 Danh sách chương</button>
+  <button onclick="toggleMenu()">📚 Danh sách chương</button>
 
-    <button id="nextBtnTop">Sau ➡</button>
-  </div>
+  <button onclick="nextChapter()">Sau ➡</button>
+</div>
 
-  <!-- Menu chương -->
-  <div id="chapterMenu" class="hidden"></div>
+<!-- Menu chương -->
+<div id="menu" class="menu hidden"></div>
 
-  <!-- Nội dung -->
-  <div id="content">Đang tải...</div>
+<!-- Nội dung -->
+<h2 id="chapterTitle">Chương 1</h2>
+<div id="content">Đang tải...</div>
 
-  <!-- Nút chức năng dưới -->
-  <div class="bottom-controls" id="bottomControls">
-    <button id="prevBtnBottom">⬅ Trước</button>
-    <button id="nextBtnBottom">Sau ➡</button>
-  </div>
+<!-- Thanh nút dưới -->
+<div class="controls bottom">
+  <button onclick="prevChapter()">⬅ Trước</button>
+  <button onclick="nextChapter()">Sau ➡</button>
+</div>
 
-  <script src="script.js"></script>
+<!-- JS luôn đặt cuối -->
+<script src="script.js"></script>
+
 </body>
 </html>

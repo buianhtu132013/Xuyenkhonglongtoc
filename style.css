@@ -1,90 +1,53 @@
 body {
-  margin: 0;
   font-family: Arial;
-  background: #111;
-  color: white;
-}
-
-header {
   text-align: center;
-  font-size: 24px;
-  padding: 15px;
-  background: #222;
+  background: #f5f5f5;
 }
 
-/* Neon marquee */
-#marqueeBox {
-  background: black;
-  padding: 8px;
+#content {
+  width: 90%;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  min-height: 200px;
+  border-radius: 12px;
 }
 
-#marqueeText {
-  font-size: 18px;
-  color: cyan;
-  text-shadow:
-    0 0 5px cyan,
-    0 0 10px cyan,
-    0 0 20px cyan;
-}
-
-/* Nút trên */
-.top-controls {
-  position: fixed;
-  top: 90px;
-  width: 100%;
-  background: #1a1a1a;
+.controls {
   display: flex;
-  justify-content: space-around;
-  padding: 10px;
-  z-index: 10;
-}
-
-/* Nút dưới */
-.bottom-controls {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #1a1a1a;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
-  z-index: 10;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px;
 }
 
 button {
-  padding: 10px 14px;
+  padding: 10px 15px;
   border: none;
-  border-radius: 10px;
-  font-size: 15px;
+  border-radius: 12px;
   cursor: pointer;
 }
 
-/* Nội dung */
-#content {
-  padding: 160px 20px 120px;
-  white-space: pre-wrap;
-  line-height: 1.8;
-  font-size: 18px;
+.marquee {
+  background: black;
+  color: cyan;
+  font-weight: bold;
+  padding: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: scrollText 60s linear infinite;
 }
 
-/* Menu chương */
-#chapterMenu {
-  position: fixed;
-  top: 140px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #222;
-  border-radius: 15px;
+@keyframes scrollText {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-100%); }
+}
+
+.menu {
+  background: white;
+  width: 200px;
+  margin: auto;
+  border-radius: 10px;
   padding: 10px;
-  max-height: 300px;
-  overflow-y: auto;
-  width: 220px;
-  z-index: 99;
-}
-
-#chapterMenu button {
-  width: 100%;
-  margin: 5px 0;
 }
 
 .hidden {
