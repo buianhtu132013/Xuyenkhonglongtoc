@@ -1,59 +1,69 @@
+/* ===== Reset ===== */
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  text-align: center;
-  background: #f2f2f2;
-  color: black;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #222;
+  overflow-x: hidden;
 }
 
-/* ===== Neon Marquee Bar ===== */
+/* ===== Dark Mode ===== */
+body.dark {
+  background: #121212;
+  color: #eee;
+}
+
+/* ===== Thanh chúc chạy ===== */
 #marquee-bar {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   background: black;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  z-index: 9999;
-  padding: 6px 0;
-}
-
-#marquee-text {
-  font-size: 16px;
-  font-weight: bold;
   color: cyan;
-  text-shadow: 0 0 8px cyan, 0 0 15px cyan;
+  font-weight: bold;
+  padding: 8px 0;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+/* Text chạy */
+#marquee-text {
+  display: inline-block;
   white-space: nowrap;
+  animation: marquee 12s linear infinite;
+  padding-left: 100%;
 }
 
-/* chạy animation */
-.run {
-  animation: scrollText 4s linear infinite;
+@keyframes marquee {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
 }
 
-@keyframes scrollText {
-  from { transform: translateX(100%); }
-  to { transform: translateX(-100%); }
-}
-
-/* nút X */
+/* Nút X */
 #close-marquee {
-  margin-left: 10px;
-  margin-right: 10px;
+  position: absolute;
+  right: 15px;
+  top: 6px;
   background: red;
-  border: none;
   color: white;
-  font-size: 14px;
+  border: none;
+  font-size: 18px;
+  padding: 2px 10px;
+  border-radius: 8px;
   cursor: pointer;
-  border-radius: 6px;
 }
 
 /* ===== Header ===== */
 h1 {
-  margin-top: 70px;
-  font-size: 40px;
+  margin-top: 70px; /* chừa chỗ marquee */
+  text-align: center;
+  font-size: 26px;
 }
 
 /* ===== Controls ===== */
@@ -61,80 +71,91 @@ h1 {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin: 20px;
+  margin: 15px 0;
+  flex-wrap: wrap;
 }
 
-.controls button {
-  padding: 12px 18px;
+button {
+  padding: 10px 15px;
   border: none;
-  border-radius: 15px;
+  border-radius: 12px;
+  cursor: pointer;
   background: #ddd;
   font-size: 16px;
-  cursor: pointer;
 }
 
-.controls button:hover {
+button:hover {
   background: #bbb;
 }
 
-/* menu chương */
+/* Dark mode button */
+body.dark button {
+  background: #333;
+  color: white;
+}
+
+body.dark button:hover {
+  background: #555;
+}
+
+/* ===== Chapter Menu ===== */
 #chapter-menu {
   display: none;
-  background: white;
+  max-width: 600px;
+  margin: auto;
   padding: 10px;
   border-radius: 15px;
-  width: 80%;
-  margin: auto;
-}
-
-#chapter-menu button {
-  margin: 5px;
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-}
-
-/* Nội dung truyện */
-#story-content {
-  width: 85%;
-  margin: auto;
   background: white;
-  padding: 20px;
-  border-radius: 20px;
-  font-size: 18px;
-  line-height: 1.8;
-  text-align: left;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
-/* Dark mode button */
-#theme-btn {
-  position: fixed;
-  right: 15px;
-  bottom: 15px;
-  padding: 12px;
-  border-radius: 50%;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-/* ===== DARK MODE ===== */
-.dark {
-  background: #111;
-  color: white;
-}
-
-.dark #story-content {
+body.dark #chapter-menu {
   background: #222;
-  color: white;
 }
 
-.dark #chapter-menu {
-  background: #333;
+/* ===== Chapter Title ===== */
+#chapter-title {
+  text-align: center;
+  font-size: 22px;
+  margin: 15px 0;
+  font-weight: bold;
 }
 
-.dark .controls button {
-  background: #444;
+/* ===== Nội dung truyện VIP ===== */
+#story-content {
+  text-align: left;          /* Fix lệch */
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+  font-size: 18px;
+  line-height: 1.9;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+
+/* Dark mode truyện */
+body.dark #story-content {
+  background: #1e1e1e;
+  color: #eee;
+}
+
+/* ===== Scroll To Top ===== */
+#scrollTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: black;
   color: white;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  font-size: 22px;
+  display: none;
+}
+
+#scrollTopBtn:hover {
+  background: gray;
 }
