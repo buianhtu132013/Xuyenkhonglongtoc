@@ -1,70 +1,67 @@
-const chapters = [
-  "chuong1.txt",
-  "chuong2.txt",
-  "chuong3.txt",
-  "chuong4.txt"
-];
+const chapterSelect = document.getElementById("chapterSelect");
+const chapterTitle = document.getElementById("chapterTitle");
+const chapterContent = document.getElementById("chapterContent");
 
-let currentIndex = 0;
+let currentChapter = 1;
+let fontSize = 18;
+const totalChapters = 5;
 
-const selectBox = document.getElementById("chapterSelect");
-
-chapters.forEach((file, i) => {
-  let option = document.createElement("option");
+/* Load danh sách chương */
+for (let i = 1; i <= totalChapters; i++) {
+  const option = document.createElement("option");
   option.value = i;
-  option.textContent = "Chương " + (i + 1);
-  selectBox.appendChild(option);
-});
-
-// ✅ Base path chuẩn cho repo không phải username.github.io
-const basePath = window.location.pathname.replace(/\/index\.html$/, "");
-
-async function loadChapter(index) {
-  const box = document.getElementById("chapterContent");
-
-  if (index < 0 || index >= chapters.length) return;
-
-  currentIndex = index;
-  selectBox.value = index;
-
-  const fileName = chapters[index];
-
-  // ✅ URL chuẩn tuyệt đối
-  const url = basePath + "/chapters/" + fileName;
-
-  box.innerHTML = "⏳ Đang tải chương...";
-
-  try {
-    const res = await fetch(url);
-
-    if (!res.ok) throw new Error("Không tìm thấy: " + url);
-
-    const text = await res.text();
-    box.innerHTML = text;
-
-    localStorage.setItem("lastChapter", index);
-
-  } catch (err) {
-    box.innerHTML = "❌ Lỗi load chương!<br><br>" + err.message;
-  }
+  option.textContent = "Chương " + i;
+  chapterSelect.appendChild(option);
 }
 
-function nextChapter() {
-  if (currentIndex < chapters.length - 1) loadChapter(currentIndex + 1);
+/* Load chương */
+function loadChapter(num) {
+  currentChapter = num;
+  chapterTitle.innerText = "Chương " + num;
+  chapterSelect.value = num;
+
+  fetch(`chapters/chuong${num}.txt`)
+    .then(res => {
+      if (!res.ok) throw new Error("Không tìm thấy file chương!");
+      return res.text();
+    })
+    .then(text => {
+      chapterContent.innerText = text;
+    })
+    .catch(err => {
+      chapterContent.innerText = "❌ " + err.message;
+    });
 }
 
-function prevChapter() {
-  if (currentIndex > 0) loadChapter(currentIndex - 1);
-}
-
-function selectChapter() {
-  loadChapter(parseInt(selectBox.value));
-}
-
-function toggleDark() {
-  document.body.classList.toggle("dark");
-}
-
-window.onload = function () {
-  loadChapter(0);
+/* Nút chương */
+document.getElementById("prevBtn").onclick = () => {
+  if (currentChapter > 1) loadChapter(currentChapter - 1);
 };
+
+document.getElementById("nextBtn").onclick = () => {
+  if (currentChapter < totalChapters) loadChapter(currentChapter + 1);
+};
+
+/* Dropdown */
+chapterSelect.onchange = () => {
+  loadChapter(Number(chapterSelect.value));
+};
+
+/* Dark mode */
+document.getElementById("toggleMode").onclick = () => {
+  document.body.classList.toggle("dark");
+};
+
+/* Font */
+document.getElementById("fontPlus").onclick = () => {
+  fontSize += 2;
+  chapterContent.style.fontSize = fontSize + "px";
+};
+
+document.getElementById("fontMinus").onclick = () => {
+  fontSize -= 2;
+  chapterContent.style.fontSize = fontSize + "px";
+};
+
+/* Start */
+loadChapter(1);

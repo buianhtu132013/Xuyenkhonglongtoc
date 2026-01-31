@@ -2,40 +2,37 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Web Đọc Truyện</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Long Tộc Cuối Cùng</title>
 
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <h1>📖 Web Đọc Truyện</h1>
+  <!-- Header -->
+  <header>
+    <h1 id="chapterTitle">Chương 1</h1>
 
-  <!-- Thanh nút trên -->
-  <div class="topBar" id="topBar">
-    <button onclick="prevChapter()">⬅</button>
+    <select id="chapterSelect"></select>
 
-    <select id="chapterSelect" onchange="selectChapter()"></select>
-
-    <button onclick="nextChapter()">➡</button>
-
-    <button onclick="toggleDark()">🌙</button>
-  </div>
+    <div class="tools">
+      <button id="fontMinus">A-</button>
+      <button id="fontPlus">A+</button>
+      <button id="toggleMode">🌙</button>
+    </div>
+  </header>
 
   <!-- Nội dung truyện -->
-  <div id="chapterContent">
-    ⏳ Đang tải truyện...
-  </div>
+  <main>
+    <pre id="chapterContent">Đang tải...</pre>
+  </main>
 
-  <!-- Thanh nút dưới -->
-  <div class="bottomBar">
-    <button onclick="prevChapter()">⬅ Chương trước</button>
-    <button onclick="nextChapter()">Chương sau ➡</button>
-  </div>
+  <!-- Thanh điều hướng dưới -->
+  <footer>
+    <button id="prevBtn">⬅ Chương trước</button>
+    <button id="nextBtn">Chương sau ➡</button>
+  </footer>
 
-  <!-- GỌI FILE JS -->
   <script src="script.js"></script>
-
 </body>
 </html>
