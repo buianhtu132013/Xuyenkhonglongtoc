@@ -1,140 +1,99 @@
-// ===============================
-// FIX LOAD + FONT ZOOM LIMIT
-// ===============================
+const content = document.getElementById("content");
 
-const chapterList = [
-  { title: "Chương 1", file: "chapters/chuong1.txt" },
-  { title: "Chương 2", file: "chapters/chuong2.txt" },
-  { title: "Chương 3", file: "chapters/chuong3.txt" }
-];
+const prevBtnTop = document.getElementById("prevBtnTop");
+const nextBtnTop = document.getElementById("nextBtnTop");
+const prevBtnBottom = document.getElementById("prevBtnBottom");
+const nextBtnBottom = document.getElementById("nextBtnBottom");
 
-let currentChapter = 0;
+const topControls = document.getElementById("topControls");
+const bottomControls = document.getElementById("bottomControls");
 
-// ===== FONT SIZE CONTROL =====
-let fontSize = 18;          // mặc định
-const minFont = 14;         // nhỏ nhất
-const maxFont = 28;         // to nhất
+const menuBtn = document.getElementById("menuBtn");
+const chapterMenu = document.getElementById("chapterMenu");
 
-// ===== HTML ELEMENTS =====
-const chapterSelect = document.getElementById("chapterSelect");
-const chapterContent = document.getElementById("chapterContent");
+const marqueeText = document.getElementById("marqueeText");
 
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
+let currentChapter = 1;
 
-const fontMinus = document.getElementById("fontMinus");
-const fontPlus = document.getElementById("fontPlus");
-
-const toggleModeBtn = document.getElementById("toggleMode");
-
-// ===============================
-// MENU CHAPTER
-// ===============================
-function loadChapterMenu() {
-  chapterSelect.innerHTML = "";
-
-  chapterList.forEach((chap, index) => {
-    const option = document.createElement("option");
-    option.value = index;
-    option.textContent = chap.title;
-    chapterSelect.appendChild(option);
-  });
+/* Neon chạy lại mỗi lần load chương */
+function restartMarquee() {
+  marqueeText.parentElement.innerHTML =
+    `<marquee id="marqueeText" scrollamount="3">
+      ✨ Tác Giả Tú chúc bạn đọc truyện vui vẻ. Thanks ✨
+    </marquee>`;
 }
 
-// ===============================
-// LOAD CHAPTER FILE
-// ===============================
-async function loadChapter(index) {
-  currentChapter = index;
-  chapterSelect.value = index;
-
-  const filePath = chapterList[index].file;
-
-  chapterContent.innerHTML = "⏳ Đang tải...";
+/* Load chương */
+async function loadChapter(chap) {
+  const file = `chapters/chuong${chap}.txt`;
 
   try {
-    const res = await fetch(filePath);
-
-    if (!res.ok) throw new Error("Không tìm thấy: " + filePath);
+    const res = await fetch(file);
+    if (!res.ok) throw "no";
 
     const text = await res.text();
+    content.innerText = text;
 
-    // ✅ Hiển thị đúng kiểu truyện (auto xuống dòng)
-    chapterContent.innerHTML = `
-      <div class="storyText">${text}</div>
-    `;
+    currentChapter = chap;
+    restartMarquee();
+  } catch {
+    content.innerText = "❌ Chương chưa tồn tại!";
+  }
+}
 
-    applyFontSize();
-  } catch (err) {
-    chapterContent.innerHTML = `
-      <div class="errorBox">
-        ❌ Lỗi load chương!<br><br>
-        ${err.message}
-      </div>
-    `;
+/* Tạo menu chương tự động */
+async function generateChapters() {
+  chapterMenu.innerHTML = "";
+
+  for (let i = 1; i <= 200; i++) {
+    const res = await fetch(`chapters/chuong${i}.txt`);
+    if (!res.ok) break;
+
+    const btn = document.createElement("button");
+    btn.innerText = `Chương ${i}`;
+    btn.onclick = () => {
+      loadChapter(i);
+      chapterMenu.classList.add("hidden");
+    };
+
+    chapterMenu.appendChild(btn);
+  }
+}
+
+/* Menu bật tắt */
+menuBtn.onclick = () => {
+  chapterMenu.classList.toggle("hidden");
+};
+
+/* Điều hướng */
+prevBtnTop.onclick = () => loadChapter(currentChapter - 1);
+prevBtnBottom.onclick = () => loadChapter(currentChapter - 1);
+
+nextBtnTop.onclick = () => loadChapter(currentChapter + 1);
+nextBtnBottom.onclick = () => loadChapter(currentChapter + 1);
+
+/* Scroll hiện nút */
+window.addEventListener("scroll", () => {
+  let scrollTop = window.scrollY;
+  let scrollBottom =
+    window.innerHeight + scrollTop >= document.body.offsetHeight - 50;
+
+  // Nút trên: chỉ hiện ở đầu
+  if (scrollTop < 100) {
+    topControls.style.display = "flex";
+  } else {
+    topControls.style.display = "none";
   }
 
-  updateButtons();
-}
-
-// ===============================
-// FONT SIZE APPLY
-// ===============================
-function applyFontSize() {
-  const story = document.querySelector(".storyText");
-  if (story) story.style.fontSize = fontSize + "px";
-}
-
-// ===============================
-// UPDATE BUTTONS
-// ===============================
-function updateButtons() {
-  prevBtn.disabled = currentChapter === 0;
-  nextBtn.disabled = currentChapter === chapterList.length - 1;
-}
-
-// ===============================
-// EVENT LISTENERS
-// ===============================
-
-// Chapter change
-chapterSelect.addEventListener("change", (e) => {
-  loadChapter(Number(e.target.value));
-});
-
-// Prev / Next
-prevBtn.addEventListener("click", () => {
-  if (currentChapter > 0) loadChapter(currentChapter - 1);
-});
-
-nextBtn.addEventListener("click", () => {
-  if (currentChapter < chapterList.length - 1)
-    loadChapter(currentChapter + 1);
-});
-
-// Font zoom -
-fontMinus.addEventListener("click", () => {
-  if (fontSize > minFont) {
-    fontSize -= 2;
-    applyFontSize();
-  }
-});
-
-// Font zoom +
-fontPlus.addEventListener("click", () => {
-  if (fontSize < maxFont) {
-    fontSize += 2;
-    applyFontSize();
+  // Nút dưới: chỉ hiện ở cuối
+  if (scrollBottom) {
+    bottomControls.style.display = "flex";
+  } else {
+    bottomControls.style.display = "none";
   }
 });
 
-// Dark mode
-toggleModeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-});
-
-// ===============================
-// INIT
-// ===============================
-loadChapterMenu();
-loadChapter(0);
+/* Khởi động */
+generateChapters();
+loadChapter(1);
+restartMarquee();

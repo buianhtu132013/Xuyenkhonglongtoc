@@ -1,89 +1,92 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  color: #111;
-}
-
-header {
-  text-align: center;
-  padding: 20px;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 32px;
-}
-
-.toolbar {
-  position: sticky;
-  top: 0;
-  background: white;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  z-index: 999;
-}
-
-.toolbar.bottom {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  border-top: 1px solid #ddd;
-}
-
-button, select {
-  padding: 10px 14px;
-  border: none;
-  border-radius: 12px;
-  background: #eee;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #ddd;
-}
-
-main {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
-  padding-bottom: 80px;
-}
-
-#chapterTitle {
-  font-size: 26px;
-  margin-bottom: 15px;
-}
-
-#chapterContent {
-  white-space: pre-wrap;
-  line-height: 1.8;
-  font-size: 18px;
-  background: white;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-/* Dark mode */
-body.dark {
+  font-family: Arial;
   background: #111;
   color: white;
 }
 
-body.dark .toolbar {
+header {
+  text-align: center;
+  font-size: 24px;
+  padding: 15px;
   background: #222;
 }
 
-body.dark button, body.dark select {
-  background: #333;
-  color: white;
+/* Neon marquee */
+#marqueeBox {
+  background: black;
+  padding: 8px;
 }
 
-body.dark #chapterContent {
-  background: #1e1e1e;
+#marqueeText {
+  font-size: 18px;
+  color: cyan;
+  text-shadow:
+    0 0 5px cyan,
+    0 0 10px cyan,
+    0 0 20px cyan;
+}
+
+/* Nút trên */
+.top-controls {
+  position: fixed;
+  top: 90px;
+  width: 100%;
+  background: #1a1a1a;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  z-index: 10;
+}
+
+/* Nút dưới */
+.bottom-controls {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #1a1a1a;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  z-index: 10;
+}
+
+button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* Nội dung */
+#content {
+  padding: 160px 20px 120px;
+  white-space: pre-wrap;
+  line-height: 1.8;
+  font-size: 18px;
+}
+
+/* Menu chương */
+#chapterMenu {
+  position: fixed;
+  top: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  border-radius: 15px;
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  width: 220px;
+  z-index: 99;
+}
+
+#chapterMenu button {
+  width: 100%;
+  margin: 5px 0;
+}
+
+.hidden {
+  display: none;
 }

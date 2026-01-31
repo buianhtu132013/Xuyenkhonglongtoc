@@ -1,37 +1,44 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Long Tộc Cuối Cùng</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📖 Web Đọc Truyện</title>
 
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- Header -->
-  <header>
-    <h1 id="chapterTitle">Chương 1</h1>
+  <!-- Neon chạy -->
+  <div id="marqueeBox">
+    <marquee id="marqueeText" scrollamount="3">
+      ✨ Tác Giả Tú chúc bạn đọc truyện vui vẻ. Thanks ✨
+    </marquee>
+  </div>
 
-    <select id="chapterSelect"></select>
+  <header>📖 Web Đọc Truyện</header>
 
-    <div class="tools">
-      <button id="fontMinus">A-</button>
-      <button id="fontPlus">A+</button>
-      <button id="toggleMode">🌙</button>
-    </div>
-  </header>
+  <!-- Nút chức năng trên -->
+  <div class="top-controls" id="topControls">
+    <button id="prevBtnTop">⬅ Trước</button>
 
-  <!-- Nội dung truyện -->
-  <main>
-    <pre id="chapterContent">Đang tải...</pre>
-  </main>
+    <button id="menuBtn">📚 Danh sách chương</button>
 
-  <!-- Thanh điều hướng dưới -->
-  <footer>
-    <button id="prevBtn">⬅ Chương trước</button>
-    <button id="nextBtn">Chương sau ➡</button>
-  </footer>
+    <button id="nextBtnTop">Sau ➡</button>
+  </div>
+
+  <!-- Menu chương -->
+  <div id="chapterMenu" class="hidden"></div>
+
+  <!-- Nội dung -->
+  <div id="content">Đang tải...</div>
+
+  <!-- Nút chức năng dưới -->
+  <div class="bottom-controls" id="bottomControls">
+    <button id="prevBtnBottom">⬅ Trước</button>
+    <button id="nextBtnBottom">Sau ➡</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
